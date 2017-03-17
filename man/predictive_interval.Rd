@@ -12,7 +12,8 @@ predictive_interval(object, ...)
 \arguments{
 \item{object}{The object to use.}
 
-\item{...}{Arguments passed to methods.}
+\item{...}{Arguments passed to methods. See the methods in the \pkg{rstanarm}
+package for examples.}
 
 \item{prob}{A number \eqn{p \in (0,1)}{p (0 < p < 1)} indicating the desired
 probability mass to include in the intervals.}
@@ -30,8 +31,8 @@ probability mass to include in the intervals.}
   quantiles, with \code{prob} defaulting to 0.9.
 }
 \description{
-See \code{predictive_interval.stanreg} in the \pkg{rstanarm} package for an
-example.
+See \code{\link[rstanarm]{predictive_interval.stanreg}} in the
+\pkg{\link[rstanarm]{rstanarm}} package for an example.
 }
 \examples{
 # Default method takes a numeric matrix (of draws from posterior
@@ -43,12 +44,19 @@ predictive_interval(ytilde, prob = 0.8)
 
 }
 \seealso{
-The \pkg{rstanarm} package for example methods
-  (\url{https://CRAN.R-project.org/package=rstanarm}).
-
-The guidelines for developers of R packages interfacing with Stan, a
-  copy of which can be found in the package vignettes. See
-  \code{browseVignettes("rstantools")} or \code{vignette(package =
-  "rstantools")}.
+\itemize{
+  \item The \pkg{\link[rstanarm]{rstanarm}} package for example methods
+  (\href{https://CRAN.R-project.org/package=rstanarm}{CRAN},
+  \href{https://github.com/stan-dev/rstanarm}{GitHub}).
 }
 
+\itemize{
+  \item The guidelines for developers of \R packages interfacing with Stan, a
+  copy of which can be found in the package vignettes. See
+  \code{browseVignettes("rstantools")} or \code{vignette(package =
+  "rstantools")}. The document is also available online at the
+  \pkg{rstantools} page on the
+  \href{https://CRAN.R-project.org/package=rstantools/vignettes/developer-guidelines.html}{CRAN
+  website}.
+}
+}

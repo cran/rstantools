@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-#' Create a skeleton for a new source package with Stan programs
+#' Create a skeleton for a new \R package with Stan programs
 #'
 #' This function is very similar to \code{\link[utils]{package.skeleton}} but is
 #' designed for source packages that want to include Stan Programs that can be
@@ -31,21 +31,22 @@
 #'
 #' @details This function first calls \code{\link[utils]{package.skeleton}} and
 #'   then adds the files listed in \code{stan_files} to an exec directory.
-#'   Finally, it downloads several files from the \pkg{rstanarm} GitHub
-#'   repository to facilitate building the resulting package. Note that
-#'   \pkg{rstanarm} is licensed under the GPL >= 3, so package builders who do
-#'   not want to be governed by that license should not use the downloaded files
-#'   that contain R code. Otherwise, it may be worth considering whether it
-#'   would be easier to include your \code{.stan} programs and supporting \R
-#'   code in the \pkg{rstanarm} package.
+#'   Finally, it downloads several files from the \pkg{rstanarm} package's
+#'   \href{http://github.com/stan-dev/rstanarm}{GitHub repository} to facilitate
+#'   building the resulting package. Note that \pkg{\link[rstanarm]{rstanarm}}
+#'   is licensed under the GPL >= 3, so package builders who do not want to be
+#'   governed by that license should not use the downloaded files that contain
+#'   \R code. Otherwise, it may be worth considering whether it would be easier
+#'   to include your \code{.stan} programs and supporting \R code in the
+#'   \pkg{rstanarm} package.
 #'
 #'   After running \code{rstan_package_skeleton} see the
 #'   \code{Read-and-delete-me} file created in the package directory. The
 #'   content in that file contains the content of the \code{Read-and-delete-me}
-#'   file created by \code{package.skeleton} plus additional Stan-specific
-#'   instructions.
+#'   file created by \code{\link[utils]{package.skeleton}} plus additional
+#'   Stan-specific instructions.
 #'
-#' @seealso The \pkg{rstanarm} GitHub repository
+#' @seealso The \pkg{rstanarm} repository on GitHub
 #'   (\url{https://github.com/stan-dev/rstanarm}).
 #' @template seealso-dev-guidelines
 #' @template seealso-get-help
@@ -162,7 +163,7 @@ rstan_package_skeleton <-
       destfile = file.path(SRC, "Makevars.win"),
       quiet = TRUE
     )
-      
+
     message("Updating R directory ...", domain = NA)
     R <- file.path(DIR, "R")
     dir.create(R, showWarnings = FALSE)
@@ -182,37 +183,11 @@ rstan_package_skeleton <-
     )
 
     message("Updating DESCRIPTION ...", domain = NA)
-    cat(
-      paste0("Depends: R (>= 3.0.2), ",
-             .pkg_dependency("Rcpp"),
-             .pkg_dependency("methods", last=TRUE)),
-      paste0("Imports: ",
-             .pkg_dependency("rstan"),
-             .pkg_dependency("rstantools", last=TRUE)),
-      paste0("LinkingTo: ",
-             .pkg_dependency("StanHeaders"),
-             .pkg_dependency("rstan"),
-             .pkg_dependency("BH"),
-             .pkg_dependency("Rcpp"),
-             .pkg_dependency("RcppEigen", last=TRUE)),
-      file = file.path(DIR, "DESCRIPTION"),
-      sep = "\n",
-      append = TRUE
-    )
+    .update_description_file(DIR)
 
-    message("Updating Read-and-delete-me ...", domain = NA)
-    cat(
-      "\n\nStan specific notes:\n",
-      "* Be sure to add useDynLib(mypackage, .registration = TRUE) to the NAMESPACE file.",
-      "* Be sure to import all of Rcpp and methods in the NAMESPACE file.",
-      "* You can put into inst/chunks/common_functions.stan any function that is needed by any .stan file, ",
-      "in which case any .stan file can have #include 'common_functions.stan' in its functions block.",
-      "* The precompiled stanmodel objects will appear in a named list called 'stanmodels'.",
-      "* The 'cleanup' and 'cleanup.win' scripts in the root of the directory must be made executable.",
-      file = file.path(DIR, "Read-and-delete-me"),
-      sep = "\n",
-      append = TRUE
-    )
+    message("Updating Read-and-delete-me with Stan-specific notes...", domain = NA)
+    .update_read_and_delete_me(DIR)
+
     message(
       domain = NA,
       sprintf(
@@ -233,4 +208,41 @@ rstan_package_skeleton <-
 
 .pkg_dependency <- function(pkg, last = FALSE) {
   paste0(pkg, " (>= ", packageVersion(pkg), ")", if (!last) ", ")
+}
+
+.update_read_and_delete_me <- function(dir) {
+  cat(
+    "\n\nStan specific notes:\n",
+    "* Be sure to add useDynLib(mypackage, .registration = TRUE) to the NAMESPACE file, ",
+    "which you can do by placing the line   #' @useDynLib rstanarm, .registration = TRUE ",
+    "in one of your .R files (e.g., see rstanarm's 'rstanarm-package.R' file).",
+    "* Be sure to import all of Rcpp and methods in the NAMESPACE file.",
+    "* You can put into inst/chunks/common_functions.stan any function that is needed by any .stan file, ",
+    "in which case any .stan file can have #include 'common_functions.stan' in its functions block.",
+    "* The precompiled stanmodel objects will appear in a named list called 'stanmodels'.",
+    "* The 'cleanup' and 'cleanup.win' scripts in the root of the directory must be made executable.",
+    file = file.path(dir, "Read-and-delete-me"),
+    sep = "\n",
+    append = TRUE
+  )
+}
+
+.update_description_file <- function(dir) {
+  cat(
+    paste0("Depends: R (>= 3.0.2), ",
+           .pkg_dependency("Rcpp"),
+           "methods"),
+    paste0("Imports: ",
+           .pkg_dependency("rstan"),
+           .pkg_dependency("rstantools", last=TRUE)),
+    paste0("LinkingTo: ",
+           .pkg_dependency("StanHeaders"),
+           .pkg_dependency("rstan"),
+           .pkg_dependency("BH"),
+           .pkg_dependency("Rcpp"),
+           .pkg_dependency("RcppEigen", last=TRUE)),
+    file = file.path(dir, "DESCRIPTION"),
+    sep = "\n",
+    append = TRUE
+  )
 }

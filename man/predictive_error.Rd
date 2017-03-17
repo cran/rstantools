@@ -12,7 +12,8 @@ predictive_error(object, ...)
 \arguments{
 \item{object}{The object to use.}
 
-\item{...}{Arguments passed to methods.}
+\item{...}{Arguments passed to methods. See the methods in the \pkg{rstanarm}
+package for examples.}
 
 \item{y}{For the default method, a vector of \eqn{y} values the same length
 as the number of columns in the matrix used as \code{object}.}
@@ -30,7 +31,8 @@ as the number of columns in the matrix used as \code{object}.}
 Generic function for computing predictive errors \eqn{y - y^{rep}}{y - yrep}
 (in-sample, for observed \eqn{y}) or \eqn{y - \tilde{y}}{y - ytilde}
 (out-of-sample, for new or held-out \eqn{y}). See
-\code{predictive_error.stanreg} in the \pkg{rstanarm} package for an example.
+\code{\link[rstanarm]{predictive_error.stanreg}} in the
+\pkg{\link[rstanarm]{rstanarm}} package for an example.
 }
 \examples{
 # default method
@@ -42,12 +44,19 @@ predictive_error(ypred, y)
 
 }
 \seealso{
-The \pkg{rstanarm} package for example methods
-  (\url{https://CRAN.R-project.org/package=rstanarm}).
-
-The guidelines for developers of R packages interfacing with Stan, a
-  copy of which can be found in the package vignettes. See
-  \code{browseVignettes("rstantools")} or \code{vignette(package =
-  "rstantools")}.
+\itemize{
+  \item The \pkg{\link[rstanarm]{rstanarm}} package for example methods
+  (\href{https://CRAN.R-project.org/package=rstanarm}{CRAN},
+  \href{https://github.com/stan-dev/rstanarm}{GitHub}).
 }
 
+\itemize{
+  \item The guidelines for developers of \R packages interfacing with Stan, a
+  copy of which can be found in the package vignettes. See
+  \code{browseVignettes("rstantools")} or \code{vignette(package =
+  "rstantools")}. The document is also available online at the
+  \pkg{rstantools} page on the
+  \href{https://CRAN.R-project.org/package=rstantools/vignettes/developer-guidelines.html}{CRAN
+  website}.
+}
+}

@@ -12,12 +12,50 @@
 
 <meta name="author" content="Stan Development Team" />
 
-<meta name="date" content="2016-12-19" />
+<meta name="date" content="2017-03-17" />
 
 <title>Guidelines for Developers of R Packages Interfacing with Stan</title>
 
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 
 
@@ -32,7 +70,7 @@
 
 <h1 class="title toc-ignore">Guidelines for Developers of R Packages Interfacing with Stan</h1>
 <h4 class="author"><em>Stan Development Team</em></h4>
-<h4 class="date"><em>2016-12-19</em></h4>
+<h4 class="date"><em>2017-03-17</em></h4>
 
 
 <div id="TOC">
@@ -66,14 +104,21 @@
 <ul>
 <li><p>The <strong>rstantools</strong> package provides the <code>rstan_package_skeleton</code> function, which you should use to create the basic structure of your package. If you have trouble setting up your package using <code>rstan_package_skeleton</code> please consult the <a href="https://github.com/stan-dev/rstanarm"><strong>rstanarm</strong></a> repository and use it as a template and/or ask us for help on the <a href="https://groups.google.com/forum/#!forum/stan-users">Stan users group</a>.</p></li>
 <li><p>Use version control (e.g., git).</p></li>
-<li><p>Unless you are developing proprietary private software, organize your code in a repository that is <em>public</em> on <a href="https://github.com/">GitHub</a> (or a similar service, but preferably GitHub). It should be public even at early stages of development, not only when officially released.</p></li>
-<li><p>Unit testing is essential. There are several R packages that make it relatively easy to write tests for your package. <strong>rstanarm</strong> uses the <a href="https://github.com/hadley/testthat"><strong>testthat</strong></a> package for this purpose, but if you prefer a different testing framework that’s fine. The <a href="https://github.com/jimhester/covr"><strong>covr</strong></a> package is useful for calculating the line coverage of your tests, and we recommend reaching at least 90% coverage before releasing a package. Good line coverage does not guarantee high quality tests, but it’s a good first step.</p></li>
+<li><p>Unless you are developing proprietary private software, organize your code in a repository that is <em>public</em> on <a href="https://github.com/">GitHub</a> (or a similar service, but preferably GitHub). It should be public even at early stages of development, not only when officially released. We recommend you add a note to your README file on how to install the development version of your package, like in the <a href="https://github.com/stan-dev/rstanarm#development-version"><strong>rstanarm</strong> README</a>:</p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if (!<span class="kw">require</span>(<span class="st">&quot;devtools&quot;</span>)) {
+  <span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)
+  <span class="kw">library</span>(<span class="st">&quot;devtools&quot;</span>)
+}
+<span class="kw">install_github</span>(<span class="st">&quot;stan-dev/rstanarm&quot;</span>, <span class="dt">args =</span> <span class="st">&quot;--preclean&quot;</span>, <span class="dt">build_vignettes =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<ul>
+<li>Unit testing is essential. There are several R packages that make it relatively easy to write tests for your package. <strong>rstanarm</strong> uses the <a href="https://github.com/hadley/testthat"><strong>testthat</strong></a> package for this purpose, but if you prefer a different testing framework that’s fine. The <a href="https://github.com/jimhester/covr"><strong>covr</strong></a> package is useful for calculating the line coverage of your tests, and we recommend reaching at least 90% coverage before releasing a package. Good line coverage does not guarantee high quality tests, but it’s a good first step.</li>
 </ul>
 </div>
 <div id="stan-code" class="section level3">
 <h3>Stan code</h3>
 <ul>
-<li><p>All Stan code for estimating models should be included in pre-written static .stan files that are compiled when the package is built (see the exec directory in the <strong>rstanarm</strong> repo for examples). You can also use the inst directory to include code chunks to be used in multiple .stan files (again see the <strong>rstanarm</strong> repo for examples). If you set of your package using <code>rstan_package_skeleton</code> this structure will be created for you. This means that your package should NOT write a Stan program when the user calls a model fitting function in your package, but rather use only Stan programs you have written by hand in advance (if you are working on a model for which you don’t think this is possible please let us know). There are several reasons for this. One reason to use pre-compiled Stan programs is that models will run immediately when called, avoiding compilation time. Second, if you want us to give advice on your Stan code (which we are happy to do) it will be easier for us if you write your programs following this recommendation. And most importantly, although pre-written static Stan programs can still contain bugs, it is much easier to test programs that do not change depending on actions taken by the user. To provide flexibility to users, your Stan programs can include branching logic (conditional statements) so that even with a number of .stan files you can still allow for many different specifications to made by the user (see .stan files in <a href="https://github.com/stan-dev/rstanarm"><strong>rstanarm</strong></a> for examples).</p></li>
+<li><p>All Stan code for estimating models should be included in pre-written static .stan files that are compiled when the package is built (see the exec directory in the <strong>rstanarm</strong> repo for examples). You can also use the inst directory to include code chunks to be used in multiple .stan files (again see the <strong>rstanarm</strong> repo for examples). If you set up your package using <code>rstan_package_skeleton</code> this structure will be created for you. This means that your package should NOT write a Stan program when the user calls a model fitting function in your package, but rather use only Stan programs you have written by hand in advance (if you are working on a model for which you don’t think this is possible please let us know). There are several reasons for this. One reason to use pre-compiled Stan programs is that models will run immediately when called, avoiding compilation time. Second, if you want us to give advice on your Stan code (which we are happy to do) it will be easier for us if you write your programs following this recommendation. And most importantly, although pre-written static Stan programs can still contain bugs, it is much easier to test programs that do not change depending on actions taken by the user. To provide flexibility to users, your Stan programs can include branching logic (conditional statements) so that even with a small number of .stan files you can still allow for many different specifications to made by the user (see the .stan files in <a href="https://github.com/stan-dev/rstanarm/tree/master/exec"><strong>rstanarm</strong></a> for examples).</p></li>
 <li><p>Use best practices for Stan code. If the models you intend to implement are discussed in the Stan manual or on the Stan users forum then you should follow any recommendations that apply to your case. If you are unsure whether your Stan programs can be made more efficient or more numerically stable then please ask us on the Stan users forum. Especially ask us if you are unsure whether your Stan programs are indeed estimating the intended model.</p></li>
 <li><p>Relatedly, prioritize safety over speed in your Stan code and sampler settings. For example, if you can write a program that runs faster but is potentially less stable, then at a minimum you should make the more stable version the default. This also means that, with rare exceptions, you should not change our recommended MCMC defaults (e.g. 4 chains, 1000+1000 iterations, NUTS not static HMC), unless you are setting the defaults to something more conservative. <strong>rstanarm</strong> even goes one step further, making the default value of the <code>adapt_delta</code> tuning parameter at least 0.95 for all models (rather than <strong>rstan</strong>’s default of 0.8) in order to reduce the step size and therefore also limit the potential for divergences. This means that <strong>rstanarm</strong> models may often run a bit slower than they need to if the user doesn’t change the defaults, but it also means that users face fewer situations in which they need to know how to change the defaults and what the implications of changing the defaults really are.</p></li>
 </ul>

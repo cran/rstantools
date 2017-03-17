@@ -9,7 +9,8 @@ log_lik(object, ...)
 \arguments{
 \item{object}{The object to use.}
 
-\item{...}{Arguments passed to methods.}
+\item{...}{Arguments passed to methods. See the methods in the \pkg{rstanarm}
+package for examples.}
 }
 \value{
 \code{log_lik} methods should return a \eqn{S} by \eqn{N} matrix,
@@ -21,19 +22,27 @@ We define a new function \code{log_lik} rather than a
 \code{\link[stats]{logLik}} method because (in addition to the conceptual
 difference) the documentation for \code{logLik} states that the return value
 will be a single number, whereas \code{log_lik} returns a matrix. See
-\code{log_lik.stanreg} in the \pkg{rstanarm} package for an example.
+\code{\link[rstanarm]{log_lik.stanreg}} in the \pkg{rstanarm} package for an
+example.
 }
 \examples{
 # See help("log_lik", package = "rstanarm")
 
 }
 \seealso{
-The \pkg{rstanarm} package for example methods
-  (\url{https://CRAN.R-project.org/package=rstanarm}).
-
-The guidelines for developers of R packages interfacing with Stan, a
-  copy of which can be found in the package vignettes. See
-  \code{browseVignettes("rstantools")} or \code{vignette(package =
-  "rstantools")}.
+\itemize{
+  \item The \pkg{\link[rstanarm]{rstanarm}} package for example methods
+  (\href{https://CRAN.R-project.org/package=rstanarm}{CRAN},
+  \href{https://github.com/stan-dev/rstanarm}{GitHub}).
 }
 
+\itemize{
+  \item The guidelines for developers of \R packages interfacing with Stan, a
+  copy of which can be found in the package vignettes. See
+  \code{browseVignettes("rstantools")} or \code{vignette(package =
+  "rstantools")}. The document is also available online at the
+  \pkg{rstantools} page on the
+  \href{https://CRAN.R-project.org/package=rstantools/vignettes/developer-guidelines.html}{CRAN
+  website}.
+}
+}

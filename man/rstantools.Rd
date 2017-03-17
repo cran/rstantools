@@ -4,29 +4,35 @@
 \name{rstantools}
 \alias{rstantools}
 \alias{rstantools-package}
-\title{Tools for Developing R Packages Interfacing with Stan}
+\title{Tools for Developing \R Packages Interfacing with Stan}
 \description{
 \if{html}{
   \figure{stanlogo.png}{options: width="50px" alt="mc-stan.org"}
   \emph{Stan Development Team}
 }
 
-The \pkg{rstantools} package provides various tools for developers of R
-packages interfacing with Stan, including functions to set up the required
-package structure, S3 generic methods to unify function naming across
-Stan-based R packages, and a vignette with guidelines for developers. To get
-started building a package see \code{\link{rstan_package_skeleton}}.
+The \pkg{rstantools} package provides various tools for developers of \R
+packages interfacing with Stan (\url{http://mc-stan.org}), including
+functions to set up the required package structure, S3 generic methods to
+unify function naming across Stan-based \R packages, and a vignette with
+guidelines for developers. To get started building a package see
+\code{\link{rstan_package_skeleton}}.
 }
 \seealso{
-The guidelines for developers of R packages interfacing with Stan, a
+\itemize{
+  \item The guidelines for developers of \R packages interfacing with Stan, a
   copy of which can be found in the package vignettes. See
   \code{browseVignettes("rstantools")} or \code{vignette(package =
-  "rstantools")}.
-
-The Stan users mailing list
-  (\url{https://groups.google.com/forum/#!forum/stan-users}) and the issue
-  tracker for the \pkg{rstantools} package
-  (\url{https://github.com/stan-dev/rstantools/issues}) for assistance if you
-  have trouble setting up your package.
+  "rstantools")}. The document is also available online at the
+  \pkg{rstantools} page on the
+  \href{https://CRAN.R-project.org/package=rstantools/vignettes/developer-guidelines.html}{CRAN
+  website}.
 }
 
+\itemize{
+  \item The \href{https://groups.google.com/forum/#!forum/stan-users}{Stan
+  users mailing list} and the
+  \href{https://github.com/stan-dev/rstantools/issues}{\pkg{rstantools} issue
+  tracker} for assistance if you have trouble setting up your package.
+}
+}
