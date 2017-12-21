@@ -1,6 +1,6 @@
-2ad1a75a455dc1d9b046c26ea46143e0 *DESCRIPTION
+ae238140a41d5da45833f51d22fbe361 *DESCRIPTION
 06f792e165b3ce8f24cb9f3d3a8d6366 *NAMESPACE
-13f164f7f43fb1abae073ae40e8dbdb3 *NEWS.md
+8ff5a110626296da014d09c613fc73b9 *NEWS.md
 119d9f478a241024a54d02197eafe52c *R/bayes_R2.R
 7bc656a87547b80e10d9f52432f79ca6 *R/init_cpp.R
 856f90259f9cda5d80aa9afcbb6b72b1 *R/log_lik.R
@@ -11,13 +11,13 @@ e21867b821e384f925d0a9feb2d1c370 *R/posterior_predict.R
 efb4e4791596f70617a790a52cf17f4b *R/predictive_error.R
 8f920c16602650edd722da600bfc6079 *R/predictive_interval.R
 f6565a78eddbe7d01d758b398afe2fc9 *R/prior_summary.R
-8e67719834b8aaa68e41c97d3da8e766 *R/rstan_package_skeleton.R
+ae8d452628d50311a8d318750c925da1 *R/rstan_package_skeleton.R
 e3607ca846f193b1460fbf9f9258d82e *R/rstantools-package.r
 48020d152473c6a5bff717745d0167d6 *R/zzz.R
-1fd5a9a7e844260ba34fdaf69e8145a4 *build/vignette.rds
-19406a31ecd71e7c80430eeceec5df49 *inst/doc/developer-guidelines.R
-9a923044f9b99cddba7e7e84c8a1e66e *inst/doc/developer-guidelines.Rmd
-940371abff2d471d27dae86cb9481794 *inst/doc/developer-guidelines.html
+1093042d9cf3bfee354c79f0d5e92984 *build/vignette.rds
+c408991d6e949e388772820d950ec725 *inst/doc/developer-guidelines.R
+5a768cc64a19d011016398ac46426937 *inst/doc/developer-guidelines.Rmd
+96933085226000dd03fbe90ed807d5f6 *inst/doc/developer-guidelines.html
 3589541cd158d046f26fb9506999dbab *man/bayes_R2.Rd
 069bff7709905f4dc1dc3928ba1d7835 *man/figures/stanlogo.png
 0459b622edb7db78e6370350e73d41da *man/init_cpp.Rd
@@ -29,7 +29,7 @@ fdf6ca2dba73f24e6c129eed71e3b956 *man/posterior_predict.Rd
 0c6a6cde738c7944d7985965774bc762 *man/predictive_error.Rd
 4eb135d7413c707225d849740760ff8f *man/predictive_interval.Rd
 4e32eabfe15e9bb37fc3d532405debae *man/prior_summary.Rd
-d637eba1534f2345a72f535fd4baa707 *man/rstan_package_skeleton.Rd
+05e851dce1248ed4484cd1bd40c75442 *man/rstan_package_skeleton.Rd
 36eeaef96d05b3acdd8527ac5370de5d *man/rstantools-package.Rd
 20343399890701e635752af966bddad3 *tests/testthat.R
 5240a7688d03c1e78bf732fae8205f80 *tests/testthat/bayes_R2.RDS
@@ -39,6 +39,6 @@ cd4e5b56448c46bab1a7c8198aa836ff *tests/testthat/posterior_interval.RDS
 580bc37134d86759af033e69fe59bb64 *tests/testthat/predictive_interval.RDS
 e68986fc8df9b444438460be1de76695 *tests/testthat/test-default-methods.R
 4be8d5f8be7a1cd99f1bf204cad5bc36 *tests/testthat/test-generics-with-no-methods.R
-4d70257e22c055305ff4b977b53e5347 *tests/testthat/test-rstan_package_skeleton.R
+043d6ee5461bebe02c9c6f8d9d372ff8 *tests/testthat/test-rstan_package_skeleton.R
 67b5a06d2aff7fc4c788183227de31d0 *tests/testthat/test.stan
-9a923044f9b99cddba7e7e84c8a1e66e *vignettes/developer-guidelines.Rmd
+5a768cc64a19d011016398ac46426937 *vignettes/developer-guidelines.Rmd
