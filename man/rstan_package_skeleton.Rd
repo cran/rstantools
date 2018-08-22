@@ -4,14 +4,14 @@
 \alias{rstan_package_skeleton}
 \title{Create the skeleton of a new \R package with Stan programs}
 \usage{
-rstan_package_skeleton(path, fields = getOption("devtools.desc"),
-  rstudio = TRUE, open = TRUE, stan_files = character(), travis = TRUE)
+rstan_package_skeleton(path, rstudio = TRUE, open = TRUE,
+  stan_files = character(), travis = TRUE)
 }
 \arguments{
 \item{path}{A relative or absolute path to the new package to be created
 (terminating in the package name).}
 
-\item{fields, rstudio, open}{See \code{usethis::create_package}.}
+\item{rstudio, open}{See \code{usethis::create_package}.}
 
 \item{stan_files}{A character vector with paths to \code{.stan} files to
 include in the package (these files will be included in the
