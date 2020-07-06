@@ -1,8 +1,8 @@
 Package: rstantools
 Type: Package
 Title: Tools for Developing R Packages Interfacing with 'Stan'
-Version: 2.1.0
-Date: 2020-05-30
+Version: 2.1.1
+Date: 2020-07-05
 Authors@R: 
     c(person(given = "Jonah",
              family = "Gabry",
@@ -37,10 +37,10 @@ Imports: desc, stats, utils, Rcpp (>= 0.12.16), RcppParallel (>= 5.0.1)
 Suggests: rstan (>= 2.17.2), usethis (>= 1.5.1), testthat (>= 2.0.0),
         knitr, pkgbuild, pkgload, roxygen2 (>= 6.0.1), rmarkdown,
         rstudioapi
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2020-06-01 17:20:31 UTC; jgabry
+Packaged: 2020-07-06 12:41:29 UTC; jgabry
 Author: Jonah Gabry [aut, cre],
   Ben Goodrich [aut],
   Martin Lysy [aut],
@@ -48,4 +48,4 @@ Author: Jonah Gabry [aut, cre],
   Trustees of Columbia University [cph]
 Maintainer: Jonah Gabry <jsg2201@columbia.edu>
 Repository: CRAN
-Date/Publication: 2020-06-01 18:40:02 UTC
+Date/Publication: 2020-07-06 16:10:03 UTC

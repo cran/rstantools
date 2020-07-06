@@ -108,14 +108,18 @@ cat(Rcode, file = file.path(PATH, "R", "lm_stan.R"))
 ## ---- echo=FALSE--------------------------------------------------------------
 cat(readLines(file.path(PATH, "R", "rstanlm-package.R")), sep = "\n")
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  pkgbuild::compile_dll() # see note below
+## ---- results = "hide"--------------------------------------------------------
+example(source) # defines the sourceDir() function
+
+## ---- eval = FALSE------------------------------------------------------------
+#  try(roxygen2::roxygenize(load_code = sourceDir), silent = TRUE)
+#  pkgbuild::compile_dll()
 #  roxygen2::roxygenize()
 
-## ---- include=FALSE-----------------------------------------------------------
-pkgbuild::compile_dll(PATH) # required for newer versions of roxygen2
-
 ## ---- echo=FALSE--------------------------------------------------------------
+try(roxygen2::roxygenize(PATH, load_code = sourceDir), silent = TRUE)
+rm(lm_stan)
+pkgbuild::compile_dll(PATH)
 roxygen2::roxygenize(PATH)
 
 ## ----eval=FALSE---------------------------------------------------------------

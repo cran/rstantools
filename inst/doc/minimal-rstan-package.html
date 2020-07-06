@@ -12,7 +12,7 @@
 
 <meta name="author" content="Stefan Siegert, Jonah Gabry, Martin Lysy, and Ben Goodrich" />
 
-<meta name="date" content="2020-06-01" />
+<meta name="date" content="2020-07-06" />
 
 <title>Step by step guide for creating a package that depends on RStan</title>
 
@@ -303,7 +303,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Step by step guide for creating a package that depends on RStan</h1>
 <h4 class="author">Stefan Siegert, Jonah Gabry, Martin Lysy, and Ben Goodrich</h4>
-<h4 class="date">2020-06-01</h4>
+<h4 class="date">2020-07-06</h4>
 
 
 <div id="TOC">
@@ -334,29 +334,32 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>Here we will use <code>rstan_create_package()</code> to initialize a bare-bones package directory. The name of our demo package will be <strong>rstanlm</strong>; it will fit a simple linear regression model using Stan.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(<span class="st">&quot;rstantools&quot;</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="kw">rstan_create_package</span>(<span class="dt">path =</span> <span class="st">&#39;rstanlm&#39;</span>)</span></code></pre></div>
-<pre><code>This is rstantools version 2.1.0</code></pre>
+<pre><code>This is rstantools version 2.1.1</code></pre>
 <pre><code>Creating package skeleton for package: rstanlm</code></pre>
-<pre><code>✔ Creating &#39;/var/folders/h6/14xy_35x4wd2tz542dn0qhtc0000gn/T/RtmppA5Tfw/rstanlm/&#39;
-✔ Setting active project to &#39;/private/var/folders/h6/14xy_35x4wd2tz542dn0qhtc0000gn/T/RtmppA5Tfw/rstanlm&#39;
-✔ Creating &#39;R/&#39;
-✔ Writing &#39;DESCRIPTION&#39;
-Package: rstanlm
+<pre><code>Package: rstanlm
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R (parsed):
     * First Last &lt;first.last@example.com&gt; [aut, cre] (&lt;https://orcid.org/YOUR-ORCID-ID&gt;)
 Description: What the package does (one paragraph).
-License: What license it uses
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
 Encoding: UTF-8
 LazyData: true
-✔ Writing &#39;NAMESPACE&#39;
-✔ Setting active project to &#39;&lt;no active project&gt;&#39;</code></pre>
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1</code></pre>
 <pre><code>Creating inst/stan/include directory ...</code></pre>
 <pre><code>Creating inst/include directory ...</code></pre>
 <pre><code>Creating src directory ...</code></pre>
 <pre><code>Updating DESCRIPTION ...</code></pre>
 <pre><code>Adding &#39;configure&#39; files ...</code></pre>
-<pre><code>Updating NAMESPACE ...</code></pre>
+<pre><code>
+Next, add the following lines (e.g., via &lt;package-name&gt;-package.R if using roxygen) to your NAMESPACE:
+
+import(Rcpp)
+import(methods)
+importFrom(rstan, sampling)
+useDynLib(rstanlm, .registration = TRUE)</code></pre>
 <pre><code>Done.</code></pre>
 <pre><code>Adding rstanlm-package.R file ...</code></pre>
 <pre><code>Adding .travis.yml file ...</code></pre>
@@ -384,9 +387,12 @@ Authors@R:
            email = &quot;first.last@example.com&quot;,
            comment = c(ORCID = &quot;YOUR-ORCID-ID&quot;))
 Description: What the package does (one paragraph).
-License: What license it uses
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
 Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
 Biarch: true
 Depends: 
     R (&gt;= 3.4.0)
@@ -395,7 +401,7 @@ Imports:
     RcppParallel (&gt;= 5.0.1),
     methods,
     rstan (&gt;= 2.18.1),
-    rstantools (&gt;= 2.1.0)
+    rstantools (&gt;= 2.1.1)
 LinkingTo: 
     BH (&gt;= 1.66.0),
     Rcpp (&gt;= 0.12.0),
@@ -487,34 +493,98 @@ NULL</code></pre>
 <div id="documentation" class="section level2">
 <h2>Documentation</h2>
 <p>With <strong>roxygen</strong> documentation enabled, we need to generate the documentation for <code>lm_stan</code> and update the <code>NAMESPACE</code> so the function is exported, i.e., available to users when the package is installed. This can be done with the function <code>roxygen2::roxygenize()</code>.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>pkgbuild<span class="op">::</span><span class="kw">compile_dll</span>() <span class="co"># see note below</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>roxygen2<span class="op">::</span><span class="kw">roxygenize</span>()</span></code></pre></div>
-<pre><code>Updating roxygen version in /private/var/folders/h6/14xy_35x4wd2tz542dn0qhtc0000gn/T/RtmppA5Tfw/rstanlm/DESCRIPTION</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="kw">example</span>(source) <span class="co"># defines the sourceDir() function</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">try</span>(roxygen2<span class="op">::</span><span class="kw">roxygenize</span>(<span class="dt">load_code =</span> sourceDir), <span class="dt">silent =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb31-2"><a href="#cb31-2"></a>pkgbuild<span class="op">::</span><span class="kw">compile_dll</span>()</span>
+<span id="cb31-3"><a href="#cb31-3"></a>roxygen2<span class="op">::</span><span class="kw">roxygenize</span>()</span></code></pre></div>
+<pre><code>Writing NAMESPACE</code></pre>
+<pre><code>Re-compiling rstanlm</code></pre>
+<pre><code>  
+─  installing *source* package ‘rstanlm’ ...
+
+  
+   ** using staged installation
+
+  
+   ** libs
+
+  
+   
+
+  
+   
+
+  
+   Error in get(name, envir = asNamespace(pkg), inherits = FALSE) : 
+     object &#39;CxxFlags&#39; not found
+   Calls: ::: -&gt; get
+   Execution halted
+
+  
+   clang++ -arch x86_64 -ftemplate-depth-256 -std=gnu++14 -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG -I&quot;../inst/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/StanHeaders/include/src&quot; -DBOOST_DISABLE_ASSERTS -DEIGEN_NO_DEBUG -DBOOST_MATH_OVERFLOW_ERROR_POLICY=errno_on_error -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/Rcpp/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppEigen/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppParallel/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/StanHeaders/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/rstan/include&quot; -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include   -fPIC  -O3 -mtune=native -march=native -Wno-unused-variable -Wno-unused-function  -Wno-macro-redefined -Wno-unknown-pragmas -Wno-unneeded-internal-declaration -c RcppExports.cpp -o RcppExports.o
+
+  
+   
+
+  
+   
+
+  
+   Error in get(name, envir = asNamespace(pkg), inherits = FALSE) : 
+     object &#39;CxxFlags&#39; not found
+   Calls: ::: -&gt; get
+   Execution halted
+
+  
+   clang++ -arch x86_64 -ftemplate-depth-256 -std=gnu++14 -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG -I&quot;../inst/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/StanHeaders/include/src&quot; -DBOOST_DISABLE_ASSERTS -DEIGEN_NO_DEBUG -DBOOST_MATH_OVERFLOW_ERROR_POLICY=errno_on_error -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/Rcpp/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppEigen/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppParallel/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/StanHeaders/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library/rstan/include&quot; -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include   -fPIC  -O3 -mtune=native -march=native -Wno-unused-variable -Wno-unused-function  -Wno-macro-redefined -Wno-unknown-pragmas -Wno-unneeded-internal-declaration -c stanExports_lm.cc -o stanExports_lm.o
+
+  
+   Error in get(name, envir = asNamespace(pkg), inherits = FALSE) : 
+     object &#39;LdFlags&#39; not found
+   Calls: ::: -&gt; get
+   Execution halted
+
+  
+   Error in get(name, envir = asNamespace(pkg), inherits = FALSE) : 
+     object &#39;LdFlags&#39; not found
+   Calls: ::: -&gt; get
+   Execution halted
+
+  
+   clang++ -arch x86_64 -ftemplate-depth-256 -std=gnu++14 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o rstanlm.so RcppExports.o stanExports_lm.o -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
+
+  
+   installing to /private/var/folders/h6/14xy_35x4wd2tz542dn0qhtc0000gn/T/RtmpnbnCxa/devtools_install_15b877172b32f/00LOCK-rstanlm/00new/rstanlm/libs
+
+  
+   ** checking absolute paths in shared objects and dynamic libraries
+
+  
+─  DONE (rstanlm)
+</code></pre>
 <pre><code>Loading rstanlm</code></pre>
 <pre><code>Writing NAMESPACE
-Writing NAMESPACE
 Writing lm_stan.Rd
 Writing rstanlm-package.Rd</code></pre>
-<p><strong>Note:</strong> For newer versions of <strong>roxygen</strong>, it is necessary to compile the package C++ code prior to running <code>roxygen2::roxygenize()</code>. One way to do this is with <code>pkgbuild::compile_dll()</code>, as above.</p>
 </div>
 <div id="install-and-use" class="section level2">
 <h2>Install and use</h2>
 <p>Finally, the package is ready to be installed:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># using ../rstanlm because already inside the rstanlm directory</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a><span class="kw">install.packages</span>(<span class="st">&quot;../rstanlm&quot;</span>, <span class="dt">repos =</span> <span class="ot">NULL</span>, <span class="dt">type =</span> <span class="st">&quot;source&quot;</span>)</span></code></pre></div>
-<pre><code>Installing package into &#39;/private/var/folders/h6/14xy_35x4wd2tz542dn0qhtc0000gn/T/RtmpqhiNfp/Rinst12fc76525dfa5&#39;
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># using ../rstanlm because already inside the rstanlm directory</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="kw">install.packages</span>(<span class="st">&quot;../rstanlm&quot;</span>, <span class="dt">repos =</span> <span class="ot">NULL</span>, <span class="dt">type =</span> <span class="st">&quot;source&quot;</span>)</span></code></pre></div>
+<pre><code>Installing package into &#39;/private/var/folders/h6/14xy_35x4wd2tz542dn0qhtc0000gn/T/Rtmpgs30S2/Rinst15b611740472b&#39;
 (as &#39;lib&#39; is unspecified)</code></pre>
 <p>It is also possible to use <code>devtools::install(quick=FALSE)</code> to install the package. The argument <code>quick=FALSE</code> is necessary if you want to recompile the Stan models. Going forward, if you only make a change to the R code or the documentation, you can set <code>quick=TRUE</code> to speed up the process, or use <code>devtools::load_all()</code>.</p>
 <p>After installation, the package can be loaded and used like any other R package:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="kw">library</span>(<span class="st">&quot;rstanlm&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>fit &lt;-<span class="st"> </span><span class="kw">lm_stan</span>(<span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>), </span>
-<span id="cb37-2"><a href="#cb37-2"></a>               <span class="co"># arguments passed to sampling</span></span>
-<span id="cb37-3"><a href="#cb37-3"></a>               <span class="dt">iter =</span> <span class="dv">2000</span>, <span class="dt">refresh =</span> <span class="dv">500</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="kw">library</span>(<span class="st">&quot;rstanlm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>fit &lt;-<span class="st"> </span><span class="kw">lm_stan</span>(<span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>), </span>
+<span id="cb40-2"><a href="#cb40-2"></a>               <span class="co"># arguments passed to sampling</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>               <span class="dt">iter =</span> <span class="dv">2000</span>, <span class="dt">refresh =</span> <span class="dv">500</span>)</span></code></pre></div>
 <pre><code>
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 1.8e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
+Chain 1: Gradient evaluation took 2.4e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.24 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -525,15 +595,15 @@ Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 1: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.022933 seconds (Warm-up)
-Chain 1:                0.026589 seconds (Sampling)
-Chain 1:                0.049522 seconds (Total)
+Chain 1:  Elapsed Time: 0.024495 seconds (Warm-up)
+Chain 1:                0.018478 seconds (Sampling)
+Chain 1:                0.042973 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 6e-06 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
+Chain 2: Gradient evaluation took 3e-06 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -544,9 +614,9 @@ Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 2: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 0.02523 seconds (Warm-up)
-Chain 2:                0.021017 seconds (Sampling)
-Chain 2:                0.046247 seconds (Total)
+Chain 2:  Elapsed Time: 0.018392 seconds (Warm-up)
+Chain 2:                0.016901 seconds (Sampling)
+Chain 2:                0.035293 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 3).
@@ -563,15 +633,15 @@ Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 3: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 3: 
-Chain 3:  Elapsed Time: 0.023565 seconds (Warm-up)
-Chain 3:                0.021779 seconds (Sampling)
-Chain 3:                0.045344 seconds (Total)
+Chain 3:  Elapsed Time: 0.019053 seconds (Warm-up)
+Chain 3:                0.019565 seconds (Sampling)
+Chain 3:                0.038618 seconds (Total)
 Chain 3: 
 
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 4).
 Chain 4: 
-Chain 4: Gradient evaluation took 2.6e-05 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.26 seconds.
+Chain 4: Gradient evaluation took 8e-06 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
 Chain 4: Adjust your expectations accordingly!
 Chain 4: 
 Chain 4: 
@@ -582,22 +652,22 @@ Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 4: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4: 
-Chain 4:  Elapsed Time: 0.026836 seconds (Warm-up)
-Chain 4:                0.021102 seconds (Sampling)
-Chain 4:                0.047938 seconds (Total)
+Chain 4:  Elapsed Time: 0.019692 seconds (Warm-up)
+Chain 4:                0.017254 seconds (Sampling)
+Chain 4:                0.036946 seconds (Total)
 Chain 4: </code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="kw">print</span>(fit)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="kw">print</span>(fit)</span></code></pre></div>
 <pre><code>Inference for Stan model: lm.
 4 chains, each with iter=2000; warmup=1000; thin=1; 
 post-warmup draws per chain=1000, total post-warmup draws=4000.
 
-           mean se_mean   sd  2.5%   25%   50%   75% 97.5% n_eff Rhat
-intercept -0.25    0.01 0.38 -0.96 -0.47 -0.25 -0.03  0.54  1862    1
-beta       0.07    0.01 0.50 -0.94 -0.22  0.08  0.38  1.05  1964    1
-sigma      1.09    0.01 0.36  0.63  0.85  1.01  1.24  2.02  1468    1
-lp__      -4.84    0.05 1.50 -8.69 -5.54 -4.46 -3.73 -3.17  1091    1
+           mean se_mean   sd  2.5%   25%   50%  75% 97.5% n_eff Rhat
+intercept  0.35    0.01 0.26 -0.15  0.21  0.35 0.50  0.90  2029    1
+beta      -0.06    0.00 0.18 -0.39 -0.16 -0.06 0.05  0.30  2112    1
+sigma      0.70    0.01 0.23  0.41  0.55  0.65 0.80  1.29  1633    1
+lp__      -0.95    0.04 1.51 -4.99 -1.55 -0.55 0.12  0.72  1209    1
 
-Samples were drawn using NUTS(diag_e) at Mon Jun  1 13:20:30 2020.
+Samples were drawn using NUTS(diag_e) at Mon Jul  6 08:41:28 2020.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
