@@ -30,7 +30,7 @@ if(dir.exists(PATH)) {
 
 In this vignette we will walk through the steps necessary for creating an
 R package that depends on Stan by creating a package with one function
-that fits a simple linear regression. Before continuing, we recommend that you first read the other vignette [_Guidelines for Developers of R Packages Interfacing with Stan_](http://mc-stan.org/rstantools/articles/developer-guidelines.html).
+that fits a simple linear regression. Before continuing, we recommend that you first read the other vignette [_Guidelines for Developers of R Packages Interfacing with Stan_](https://mc-stan.org/rstantools/articles/developer-guidelines.html).
 
 ## Creating the package skeleton
 
@@ -156,7 +156,7 @@ model {
   y ~ normal(intercept + beta * x, sigma);
 }
 "
-cat(stan_prog, file = file.path(PATH, "inst", "stan", "lm.stan"))
+writeLines(stan_prog, con = file.path(PATH, "inst", "stan", "lm.stan"))
 rstan_config(PATH)
 ```
 
@@ -186,7 +186,7 @@ ensures that the function has a help file and that it is added to the package
 #'
 #' @export
 #' @param x Numeric vector of input values.
-#' @param y Numberic vector of output values.
+#' @param y Numeric vector of output values.
 #' @param ... Arguments passed to `rstan::sampling` (e.g. iter, chains).
 #' @return An object of class `stanfit` returned by `rstan::sampling`
 #'
@@ -205,7 +205,7 @@ Rcode <- "
 #'
 #' @export
 #' @param x Numeric vector of input values.
-#' @param y Numberic vector of output values.
+#' @param y Numeric vector of output values.
 #' @param ... Arguments passed to `rstan::sampling`.
 #' @return An object of class `stanfit` returned by `rstan::sampling`
 lm_stan <- function(x, y, ...) {
@@ -213,7 +213,7 @@ lm_stan <- function(x, y, ...) {
   return(out)
 }
 "
-cat(Rcode, file = file.path(PATH, "R", "lm_stan.R"))
+writeLines(Rcode, con = file.path(PATH, "R", "lm_stan.R"))
 ```
 
 When __roxygen2__ documentation is enabled, a top-level package file
@@ -236,20 +236,17 @@ information about the package.
 With __roxygen__ documentation enabled, we need to generate the documentation
 for `lm_stan` and update the `NAMESPACE` so the function is exported, i.e.,
 available to users when the package is installed.  This can be done with the
-function `roxygen2::roxygenize()`.
+function `roxygen2::roxygenize()`, which needs to be called twice initially.
 
 ```{r, results = "hide"}
 example(source) # defines the sourceDir() function
 ```
 ```{r, eval = FALSE}
 try(roxygen2::roxygenize(load_code = sourceDir), silent = TRUE)
-pkgbuild::compile_dll()
 roxygen2::roxygenize()
 ```
-```{r, echo=FALSE}
+```{r, echo=FALSE, results="hide"}
 try(roxygen2::roxygenize(PATH, load_code = sourceDir), silent = TRUE)
-rm(lm_stan)
-pkgbuild::compile_dll(PATH)
 roxygen2::roxygenize(PATH)
 ```
 
@@ -307,12 +304,22 @@ existing package, instead of building the package from scratch.
     roxygen to update your Namespace file via the `R/<package-name>-package.R` file.
     Check the roxygen documentation for more details.
 
+## Adding additional Stan models to an existing R package with Stan models
+
+One may add additional Stan models to an existing package.
+The following steps are required if one is using `devtools`:
+
+1.  Add new Stan file, e.g., `inst/stan/new.stan`
+2.  Run `pkgbuild::compile_dll()` to preform a fake R CMD install.
+3.  Run  `roxygen2::roxygenize()` to update the documentation.
+4.  Run ` devtools::install()` to install the package locally.
+
 ## Links
 
 * [_Guidelines for Developers of R Packages Interfacing with Stan_](https://mc-stan.org/rstantools/articles/developer-guidelines.html)
 
 * Ask a question at the [Stan Forums](https://discourse.mc-stan.org/)
 
-* [R packages](http://r-pkgs.had.co.nz/) by Hadley Wickham provides a solid
-foundation in R package development as well as the release process.
+* [R packages](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan provides
+a solid foundation in R package development as well as the release process.
 

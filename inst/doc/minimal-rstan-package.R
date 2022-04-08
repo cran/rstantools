@@ -65,7 +65,7 @@ model {
   y ~ normal(intercept + beta * x, sigma);
 }
 "
-cat(stan_prog, file = file.path(PATH, "inst", "stan", "lm.stan"))
+writeLines(stan_prog, con = file.path(PATH, "inst", "stan", "lm.stan"))
 rstan_config(PATH)
 
 ## -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ rstan_config(PATH)
 #'
 #' @export
 #' @param x Numeric vector of input values.
-#' @param y Numberic vector of output values.
+#' @param y Numeric vector of output values.
 #' @param ... Arguments passed to `rstan::sampling` (e.g. iter, chains).
 #' @return An object of class `stanfit` returned by `rstan::sampling`
 #'
@@ -92,7 +92,7 @@ Rcode <- "
 #'
 #' @export
 #' @param x Numeric vector of input values.
-#' @param y Numberic vector of output values.
+#' @param y Numeric vector of output values.
 #' @param ... Arguments passed to `rstan::sampling`.
 #' @return An object of class `stanfit` returned by `rstan::sampling`
 lm_stan <- function(x, y, ...) {
@@ -100,7 +100,7 @@ lm_stan <- function(x, y, ...) {
   return(out)
 }
 "
-cat(Rcode, file = file.path(PATH, "R", "lm_stan.R"))
+writeLines(Rcode, con = file.path(PATH, "R", "lm_stan.R"))
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  file.show(file.path("R", "rstanlm-package.R"))
@@ -113,13 +113,10 @@ example(source) # defines the sourceDir() function
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  try(roxygen2::roxygenize(load_code = sourceDir), silent = TRUE)
-#  pkgbuild::compile_dll()
 #  roxygen2::roxygenize()
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ---- echo=FALSE, results="hide"----------------------------------------------
 try(roxygen2::roxygenize(PATH, load_code = sourceDir), silent = TRUE)
-rm(lm_stan)
-pkgbuild::compile_dll(PATH)
 roxygen2::roxygenize(PATH)
 
 ## ----eval=FALSE---------------------------------------------------------------
