@@ -1,11 +1,11 @@
-6586a5477dff53476cccfaa4bed9dfb4 *DESCRIPTION
+1dad9bd770a5abc25e7b552684284164 *DESCRIPTION
 aa867da8eaa056fdb6b249b79b231b5d *NAMESPACE
-39207b6f2ad536cf6c8bc955d6099a1e *NEWS.md
+52439cee0cc5fd016dfca7005a06b8e6 *NEWS.md
 a2729001ee333c5ac75021472caeeb61 *R/bayes_R2.R
-def46105e507c556547f20310f51b3b8 *R/init_cpp.R
+63d5c2ad5e271095d47289e21dd54e0f *R/init_cpp.R
 45561b9fa670d9884d99362f8887de19 *R/log_lik.R
 ff980b18072694d9a0719e0464aae5d1 *R/loo-functions.R
-14b0f921eecaa8aeee0f08fbc069fbed *R/nsamples.R
+b218c2cf97ae3327a82c80a3ac5f24ae *R/nsamples.R
 f6ec676206d61601c44967bf4e703f87 *R/posterior_epred.R
 992d35d7977ff1d704fce459f56cc16b *R/posterior_interval.R
 79092614b76b8f9764bd44cfe01ef7ed *R/posterior_linpred.R
@@ -13,7 +13,7 @@ f6ec676206d61601c44967bf4e703f87 *R/posterior_epred.R
 705477b48b5b8abe06ba0eb918953948 *R/predictive_error.R
 621f19e1281bd866ec4844fa0d03b623 *R/predictive_interval.R
 9ae1775818a277228d8b6b8efcfe8ece *R/prior_summary.R
-3cb97e3710419a887711ebf0cdb9c639 *R/rstan_config.R
+b814816efbfe2fea6f68767829b12e34 *R/rstan_config.R
 a1127558dba5e5d69c097ad4afcb0135 *R/rstan_create_package.R
 ad1651516836a07449cf0eda6a69ed12 *R/rstan_package_utils.R
 1e7e58518c9f844f8dd5c3ac9beb1e91 *R/rstantools-package.R
@@ -25,7 +25,7 @@ f34f4aee1e3c3ca00c6878752f08203b *build/vignette.rds
 4ff14f2169213033aba922488a2e699d *inst/doc/developer-guidelines.html
 16a985de265c9c99730d022f3f90ad97 *inst/doc/minimal-rstan-package.R
 759b6e484f8a2af47d378abb11fe3164 *inst/doc/minimal-rstan-package.Rmd
-001d149adfbecd3e2576cd8ea3cfe2cc *inst/doc/minimal-rstan-package.html
+63a1b67d283cf332200c59182d0fbe55 *inst/doc/minimal-rstan-package.html
 449b28689728a8ed539123e674081b67 *inst/include/sys/DESCRIPTION
 70ac4a9b966173278cc9d14b2f33349e *inst/include/sys/Makevars
 d368a027d5c7f6707a890614bbc5095d *inst/include/sys/Makevars.win
@@ -40,10 +40,10 @@ bcda1436702c2d39b590818e3bec9129 *inst/include/sys/travis.yml
 e7340f4f5567b038ba241a2d6e46180f *man/bayes_R2.Rd
 d30b67d89b4ff08c286c624b9dac80ad *man/figures/logo.svg
 5fad10a5cc62c59ea429a5ce90191e2e *man/figures/stanlogo.png
-322ce9625e958ea9000a044b43bc4751 *man/init_cpp.Rd
+af99833444049e909673059ec52d0c93 *man/init_cpp.Rd
 9aac16966ddd34a169c9828202f77b07 *man/log_lik.Rd
 d58dc5c8bae99b33e40ec43848323295 *man/loo-prediction.Rd
-d304e29544efd6632a2a693a840d201c *man/nsamples.Rd
+1353e136586f1f348faf601647a9138b *man/nsamples.Rd
 8dd2b0f333f36f67bb015f2ec66e8567 *man/posterior_epred.Rd
 12fdcbfc7c4602dfb6c5972bd368bb55 *man/posterior_interval.Rd
 aba7c41c550e7edd176e5cbfe37fb2ed *man/posterior_linpred.Rd

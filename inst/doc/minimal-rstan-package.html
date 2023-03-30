@@ -12,7 +12,7 @@
 
 <meta name="author" content="Stefan Siegert, Jonah Gabry, Martin Lysy, and Ben Goodrich" />
 
-<meta name="date" content="2023-03-09" />
+<meta name="date" content="2023-03-29" />
 
 <title>Step by step guide for creating a package that depends on RStan</title>
 
@@ -342,7 +342,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 that depends on RStan</h1>
 <h4 class="author">Stefan Siegert, Jonah Gabry, Martin Lysy, and Ben
 Goodrich</h4>
-<h4 class="date">2023-03-09</h4>
+<h4 class="date">2023-03-29</h4>
 
 
 <div id="TOC">
@@ -389,7 +389,7 @@ bare-bones package directory. The name of our demo package will be
 using Stan.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rstantools&quot;</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rstan_create_package</span>(<span class="at">path =</span> <span class="st">&#39;rstanlm&#39;</span>)</span></code></pre></div>
-<pre><code>This is rstantools version 2.3.0</code></pre>
+<pre><code>This is rstantools version 2.3.1</code></pre>
 <pre><code>Creating package skeleton for package: rstanlm</code></pre>
 <pre><code>Package: rstanlm
 Title: What the Package Does (One Line, Title Case)
@@ -401,7 +401,7 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.2</code></pre>
+RoxygenNote: 7.2.3</code></pre>
 <pre><code>Creating inst/stan/include directory ...</code></pre>
 <pre><code>Creating inst/include directory ...</code></pre>
 <pre><code>Creating src directory ...</code></pre>
@@ -447,7 +447,7 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Biarch: true
 Depends: 
     R (&gt;= 3.4.0)
@@ -456,7 +456,7 @@ Imports:
     RcppParallel (&gt;= 5.0.1),
     methods,
     rstan (&gt;= 2.18.1),
-    rstantools (&gt;= 2.3.0)
+    rstantools (&gt;= 2.3.1)
 LinkingTo: 
     BH (&gt;= 1.66.0),
     Rcpp (&gt;= 0.12.0),
@@ -575,7 +575,7 @@ code:</p>
 #&#39; @importFrom rstan sampling
 #&#39;
 #&#39; @references
-#&#39; Stan Development Team (NA). RStan: the R interface to Stan. R package version 2.26.13. https://mc-stan.org
+#&#39; Stan Development Team (NA). RStan: the R interface to Stan. R package version 2.31.0.9000. https://mc-stan.org
 #&#39;
 NULL</code></pre>
 <p>The <code>#&#39; @description</code> section can be manually edited to
@@ -592,11 +592,11 @@ initially.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">example</span>(source) <span class="co"># defines the sourceDir() function</span></span></code></pre></div>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(roxygen2<span class="sc">::</span><span class="fu">roxygenize</span>(<span class="at">load_code =</span> sourceDir), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>roxygen2<span class="sc">::</span><span class="fu">roxygenize</span>()</span></code></pre></div>
-<pre><code>Writing &#39;]8;;file:///private/var/folders/s0/zfzm55px2nd2v__zlw5xfj2h0000gn/T/RtmpISd8OZ/Rbuild68e318a22252/rstantools/vignettes/NAMESPACENAMESPACE]8;;&#39;
+<pre><code>Writing &#39;]8;;file:///private/var/folders/s0/zfzm55px2nd2v__zlw5xfj2h0000gn/T/RtmpAyTiEC/Rbuild5eba42901ca4/rstantools/vignettes/NAMESPACENAMESPACE]8;;&#39;
 ℹ Loading rstanlm
-Re-compiling rstanlm
+ℹ Re-compiling rstanlm (debug build)
 
-Writing &#39;]8;;file:///private/var/folders/s0/zfzm55px2nd2v__zlw5xfj2h0000gn/T/RtmpISd8OZ/Rbuild68e318a22252/rstantools/vignettes/NAMESPACENAMESPACE]8;;&#39;
+Writing &#39;]8;;file:///private/var/folders/s0/zfzm55px2nd2v__zlw5xfj2h0000gn/T/RtmpAyTiEC/Rbuild5eba42901ca4/rstantools/vignettes/NAMESPACENAMESPACE]8;;&#39;
 Writing &#39;]8;;ide:run:pkgload::dev_help(&#39;lm_stan&#39;)lm_stan.Rd]8;;&#39;
 Writing &#39;]8;;ide:run:pkgload::dev_help(&#39;rstanlm-package&#39;)rstanlm-package.Rd]8;;&#39;</code></pre>
 </div>
@@ -605,7 +605,7 @@ Writing &#39;]8;;ide:run:pkgload::dev_help(&#39;rstanlm-package&#39;)rstanlm-p
 <p>Finally, the package is ready to be installed:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using ../rstanlm because already inside the rstanlm directory</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;../rstanlm&quot;</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">&quot;source&quot;</span>)</span></code></pre></div>
-<pre><code>Installing package into &#39;/private/var/folders/s0/zfzm55px2nd2v__zlw5xfj2h0000gn/T/RtmpISd8OZ/Rinst68e33c7b4220&#39;
+<pre><code>Installing package into &#39;/private/var/folders/s0/zfzm55px2nd2v__zlw5xfj2h0000gn/T/RtmpAyTiEC/Rinst5eba3487520&#39;
 (as &#39;lib&#39; is unspecified)</code></pre>
 <p>It is also possible to use
 <code>devtools::install(quick=FALSE)</code> to install the package. The
@@ -622,8 +622,8 @@ R package:</p>
 <pre><code>
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 2e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
+Chain 1: Gradient evaluation took 7.3e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.73 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -634,15 +634,15 @@ Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 1: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.027 seconds (Warm-up)
-Chain 1:                0.026 seconds (Sampling)
-Chain 1:                0.053 seconds (Total)
+Chain 1:  Elapsed Time: 0.337 seconds (Warm-up)
+Chain 1:                0.343 seconds (Sampling)
+Chain 1:                0.68 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 4e-06 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+Chain 2: Gradient evaluation took 3.4e-05 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.34 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -653,15 +653,15 @@ Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 2: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 0.024 seconds (Warm-up)
-Chain 2:                0.022 seconds (Sampling)
-Chain 2:                0.046 seconds (Total)
+Chain 2:  Elapsed Time: 0.33 seconds (Warm-up)
+Chain 2:                0.338 seconds (Sampling)
+Chain 2:                0.668 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 3).
 Chain 3: 
-Chain 3: Gradient evaluation took 5.2e-05 seconds
-Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.52 seconds.
+Chain 3: Gradient evaluation took 3.3e-05 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.33 seconds.
 Chain 3: Adjust your expectations accordingly!
 Chain 3: 
 Chain 3: 
@@ -672,15 +672,15 @@ Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 3: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 3: 
-Chain 3:  Elapsed Time: 0.021 seconds (Warm-up)
-Chain 3:                0.021 seconds (Sampling)
-Chain 3:                0.042 seconds (Total)
+Chain 3:  Elapsed Time: 0.325 seconds (Warm-up)
+Chain 3:                0.312 seconds (Sampling)
+Chain 3:                0.637 seconds (Total)
 Chain 3: 
 
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 4).
 Chain 4: 
-Chain 4: Gradient evaluation took 4e-06 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+Chain 4: Gradient evaluation took 3.4e-05 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.34 seconds.
 Chain 4: Adjust your expectations accordingly!
 Chain 4: 
 Chain 4: 
@@ -691,9 +691,9 @@ Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 4: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4: 
-Chain 4:  Elapsed Time: 0.024 seconds (Warm-up)
-Chain 4:                0.023 seconds (Sampling)
-Chain 4:                0.047 seconds (Total)
+Chain 4:  Elapsed Time: 0.336 seconds (Warm-up)
+Chain 4:                0.36 seconds (Sampling)
+Chain 4:                0.696 seconds (Total)
 Chain 4: </code></pre>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit)</span></code></pre></div>
 <pre><code>Inference for Stan model: lm.
@@ -701,12 +701,12 @@ Chain 4: </code></pre>
 post-warmup draws per chain=1000, total post-warmup draws=4000.
 
            mean se_mean   sd  2.5%   25%   50%   75% 97.5% n_eff Rhat
-intercept -0.02    0.00 0.23 -0.49 -0.16 -0.02  0.12  0.42  2133    1
-beta      -0.38    0.00 0.17 -0.72 -0.48 -0.38 -0.27 -0.04  2027    1
-sigma      0.67    0.01 0.21  0.40  0.53  0.62  0.77  1.17  1614    1
-lp__      -0.42    0.04 1.41 -3.96 -1.08 -0.08  0.63  1.21  1291    1
+intercept -0.17    0.01 0.34 -0.89 -0.37 -0.17  0.04  0.47  2152    1
+beta       0.41    0.01 0.35 -0.28  0.21  0.41  0.61  1.11  2242    1
+sigma      0.99    0.01 0.32  0.58  0.78  0.92  1.14  1.81  1910    1
+lp__      -4.01    0.04 1.54 -7.98 -4.69 -3.62 -2.88 -2.28  1328    1
 
-Samples were drawn using NUTS(diag_e) at Thu Mar  9 12:59:20 2023.
+Samples were drawn using NUTS(diag_e) at Wed Mar 29 18:39:03 2023.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
