@@ -1,7 +1,7 @@
 Package: rstantools
 Type: Package
 Title: Tools for Developing R Packages Interfacing with 'Stan'
-Version: 2.3.1
+Version: 2.3.1.1
 Date: 2023-03-29
 Authors@R: 
     c(person(given = "Jonah",
@@ -48,7 +48,7 @@ Suggests: rstan (>= 2.17.2), usethis (>= 1.5.1), testthat (>= 2.0.0),
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-03-30 00:39:04 UTC; jgabry
+Packaged: 2023-07-18 08:49:07 UTC; hornik
 Author: Jonah Gabry [aut, cre],
   Ben Goodrich [aut],
   Martin Lysy [aut],
@@ -59,4 +59,4 @@ Author: Jonah Gabry [aut, cre],
   Trustees of Columbia University [cph]
 Maintainer: Jonah Gabry <jsg2201@columbia.edu>
 Repository: CRAN
-Date/Publication: 2023-03-30 03:50:02 UTC
+Date/Publication: 2023-07-18 11:10:53 UTC

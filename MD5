@@ -1,4 +1,4 @@
-1dad9bd770a5abc25e7b552684284164 *DESCRIPTION
+6472559a1497e4a1dcb92528e8ca91df *DESCRIPTION
 aa867da8eaa056fdb6b249b79b231b5d *NAMESPACE
 52439cee0cc5fd016dfca7005a06b8e6 *NEWS.md
 a2729001ee333c5ac75021472caeeb61 *R/bayes_R2.R
@@ -13,7 +13,7 @@ f6ec676206d61601c44967bf4e703f87 *R/posterior_epred.R
 705477b48b5b8abe06ba0eb918953948 *R/predictive_error.R
 621f19e1281bd866ec4844fa0d03b623 *R/predictive_interval.R
 9ae1775818a277228d8b6b8efcfe8ece *R/prior_summary.R
-b814816efbfe2fea6f68767829b12e34 *R/rstan_config.R
+420474fe68b10f6719074e5a1b3ba066 *R/rstan_config.R
 a1127558dba5e5d69c097ad4afcb0135 *R/rstan_create_package.R
 ad1651516836a07449cf0eda6a69ed12 *R/rstan_package_utils.R
 1e7e58518c9f844f8dd5c3ac9beb1e91 *R/rstantools-package.R
@@ -27,8 +27,8 @@ f34f4aee1e3c3ca00c6878752f08203b *build/vignette.rds
 759b6e484f8a2af47d378abb11fe3164 *inst/doc/minimal-rstan-package.Rmd
 63a1b67d283cf332200c59182d0fbe55 *inst/doc/minimal-rstan-package.html
 449b28689728a8ed539123e674081b67 *inst/include/sys/DESCRIPTION
-70ac4a9b966173278cc9d14b2f33349e *inst/include/sys/Makevars
-d368a027d5c7f6707a890614bbc5095d *inst/include/sys/Makevars.win
+bc71de374ff08502b57441efc1825003 *inst/include/sys/Makevars
+3b7ad65c348a0187da68d1f1c4772010 *inst/include/sys/Makevars.win
 949dbefdb5cef3795d4bf215ce1236f1 *inst/include/sys/Read_and_delete_me
 9f81dd2a43743a5e4485ed69d4043a3b *inst/include/sys/configure
 df46ef4eb0907011e9c28549a3bfd2b3 *inst/include/sys/configure.win
