@@ -12,7 +12,7 @@
 
 <meta name="author" content="Stefan Siegert, Jonah Gabry, Martin Lysy, and Ben Goodrich" />
 
-<meta name="date" content="2023-03-29" />
+<meta name="date" content="2024-01-22" />
 
 <title>Step by step guide for creating a package that depends on RStan</title>
 
@@ -342,7 +342,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 that depends on RStan</h1>
 <h4 class="author">Stefan Siegert, Jonah Gabry, Martin Lysy, and Ben
 Goodrich</h4>
-<h4 class="date">2023-03-29</h4>
+<h4 class="date">2024-01-22</h4>
 
 
 <div id="TOC">
@@ -387,9 +387,9 @@ Stan programs</li>
 bare-bones package directory. The name of our demo package will be
 <strong>rstanlm</strong>; it will fit a simple linear regression model
 using Stan.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rstantools&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rstan_create_package</span>(<span class="at">path =</span> <span class="st">&#39;rstanlm&#39;</span>)</span></code></pre></div>
-<pre><code>This is rstantools version 2.3.1</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rstantools&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">rstan_create_package</span>(<span class="at">path =</span> <span class="st">&#39;rstanlm&#39;</span>)</span></code></pre></div>
+<pre><code>This is rstantools version 2.4.0</code></pre>
 <pre><code>Creating package skeleton for package: rstanlm</code></pre>
 <pre><code>Package: rstanlm
 Title: What the Package Does (One Line, Title Case)
@@ -401,7 +401,7 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3</code></pre>
+RoxygenNote: 7.3.0</code></pre>
 <pre><code>Creating inst/stan/include directory ...</code></pre>
 <pre><code>Creating inst/include directory ...</code></pre>
 <pre><code>Creating src directory ...</code></pre>
@@ -413,6 +413,8 @@ Next, add the following lines (e.g., via &lt;package-name&gt;-package.R if using
 import(Rcpp)
 import(methods)
 importFrom(rstan, sampling)
+importFrom(rstantools, rstan_config)
+importFrom(RcppParallel, RcppParallelLibs)
 useDynLib(rstanlm, .registration = TRUE)</code></pre>
 <pre><code>Done.</code></pre>
 <pre><code>Adding rstanlm-package.R file ...</code></pre>
@@ -429,13 +431,13 @@ of the package is in place.</p>
 and view the contents. (Note: if using RStudio then by default the newly
 created project for the package will be opened in a new session and you
 will not need the call to <code>setwd()</code>.)</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;rstanlm&quot;</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">all.files =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;rstanlm&quot;</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">all.files =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code> [1] &quot;.&quot;                  &quot;..&quot;                 &quot;.Rbuildignore&quot;     
  [4] &quot;.gitignore&quot;         &quot;DESCRIPTION&quot;        &quot;NAMESPACE&quot;         
  [7] &quot;R&quot;                  &quot;Read-and-delete-me&quot; &quot;configure&quot;         
 [10] &quot;configure.win&quot;      &quot;inst&quot;               &quot;src&quot;               </code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.show</span>(<span class="st">&quot;DESCRIPTION&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">file.show</span>(<span class="st">&quot;DESCRIPTION&quot;</span>)</span></code></pre></div>
 <pre><code>Package: rstanlm
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
@@ -447,7 +449,7 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.0
 Biarch: true
 Depends: 
     R (&gt;= 3.4.0)
@@ -456,7 +458,7 @@ Imports:
     RcppParallel (&gt;= 5.0.1),
     methods,
     rstan (&gt;= 2.18.1),
-    rstantools (&gt;= 2.3.1)
+    rstantools (&gt;= 2.4.0)
 LinkingTo: 
     BH (&gt;= 1.66.0),
     Rcpp (&gt;= 0.12.0),
@@ -479,7 +481,7 @@ versions to <code>Depends</code>, <code>Imports</code>, and
 <p>Before deleting the <code>Read-and-delete-me</code> file in the new
 package directory make sure to read it because it contains some
 important instructions about customizing your package:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.show</span>(<span class="st">&quot;Read-and-delete-me&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">file.show</span>(<span class="st">&quot;Read-and-delete-me&quot;</span>)</span></code></pre></div>
 <pre><code>Stan-specific notes:
 
 * All &#39;.stan&#39; files containing stanmodel definitions must be placed in &#39;inst/stan&#39;.
@@ -493,7 +495,7 @@ important instructions about customizing your package:</p>
 <p>You can move this file out of the directory, delete it, or list it in
 the <code>.Rbuildignore</code> file if you want to keep it in the
 directory.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.remove</span>(<span class="st">&#39;Read-and-delete-me&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">file.remove</span>(<span class="st">&#39;Read-and-delete-me&#39;</span>)</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
 </div>
 <div id="stan-files" class="section level2">
@@ -505,22 +507,22 @@ predictor <code>x</code>. After writing the necessary Stan program, the
 file should be saved with a <code>.stan</code> extension in the
 <code>inst/stan</code> subdirectory. We’ll save the following program to
 <code>inst/stan/lm.stan</code>:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Save this file as inst/stan/lm.stan</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>&gt; N;</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[N] x;</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[N] y;</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> intercept;</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> beta;</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; sigma;</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ... priors, etc.</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  y ~ normal(intercept + beta * x, sigma);</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="co">// Save this file as inst/stan/lm.stan</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>&gt; N;</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>  <span class="dt">vector</span>[N] x;</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>  <span class="dt">vector</span>[N] y;</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>}</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>  <span class="dt">real</span> intercept;</span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>  <span class="dt">real</span> beta;</span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; sigma;</span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>}</span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>  <span class="co">// ... priors, etc.</span></span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>  y ~ normal(intercept + beta * x, sigma);</span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a>}</span></code></pre></div>
 <p>The <code>inst/stan</code> subdirectory can contain additional Stan
 programs if required by your package. During installation, all Stan
 programs will be compiled and saved in the list <code>stanmodels</code>
@@ -541,27 +543,27 @@ being used. Setting the <code>rstan_create_package()</code> argument
 documentation for the package functions. The following comment block
 placed in <code>lm_stan.R</code> ensures that the function has a help
 file and that it is added to the package <code>NAMESPACE</code>:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save this file as `R/lm_stan.R`</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Bayesian linear regression with Stan</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param x Numeric vector of input values.</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param y Numeric vector of output values.</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param ... Arguments passed to `rstan::sampling` (e.g. iter, chains).</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return An object of class `stanfit` returned by `rstan::sampling`</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>lm_stan <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, ...) {</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  standata <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">N =</span> <span class="fu">length</span>(y))</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> rstan<span class="sc">::</span><span class="fu">sampling</span>(stanmodels<span class="sc">$</span>lm, <span class="at">data =</span> standata, ...)</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(out)</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># Save this file as `R/lm_stan.R`</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="co">#&#39; Bayesian linear regression with Stan</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&#39; @param x Numeric vector of input values.</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co">#&#39; @param y Numeric vector of output values.</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="co">#&#39; @param ... Arguments passed to `rstan::sampling` (e.g. iter, chains).</span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a><span class="co">#&#39; @return An object of class `stanfit` returned by `rstan::sampling`</span></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a>lm_stan <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, ...) {</span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a>  standata <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">N =</span> <span class="fu">length</span>(y))</span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a>  out <span class="ot">&lt;-</span> rstan<span class="sc">::</span><span class="fu">sampling</span>(stanmodels<span class="sc">$</span>lm, <span class="at">data =</span> standata, ...)</span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a>  <span class="fu">return</span>(out)</span>
+<span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a>}</span></code></pre></div>
 <p>When <strong>roxygen2</strong> documentation is enabled, a top-level
 package file <code>R/rstanlm-package.R</code> is created by
 <code>rstan_create_package()</code> to import necessary functions for
 other packages and to set up the package for compiling Stan C++
 code:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.show</span>(<span class="fu">file.path</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;rstanlm-package.R&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">file.show</span>(<span class="fu">file.path</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;rstanlm-package.R&quot;</span>))</span></code></pre></div>
 <pre><code>#&#39; The &#39;rstanlm&#39; package.
 #&#39;
 #&#39; @description A DESCRIPTION OF THE PACKAGE
@@ -573,9 +575,11 @@ code:</p>
 #&#39; @import methods
 #&#39; @import Rcpp
 #&#39; @importFrom rstan sampling
+#&#39; @importFrom rstantools rstan_config
+#&#39; @importFrom RcppParallel RcppParallelLibs
 #&#39;
 #&#39; @references
-#&#39; Stan Development Team (NA). RStan: the R interface to Stan. R package version 2.31.0.9000. https://mc-stan.org
+#&#39; Stan Development Team (NA). RStan: the R interface to Stan. R package version 2.32.3. https://mc-stan.org
 #&#39;
 NULL</code></pre>
 <p>The <code>#&#39; @description</code> section can be manually edited to
@@ -589,23 +593,24 @@ generate the documentation for <code>lm_stan</code> and update the
 users when the package is installed. This can be done with the function
 <code>roxygen2::roxygenize()</code>, which needs to be called twice
 initially.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">example</span>(source) <span class="co"># defines the sourceDir() function</span></span></code></pre></div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(roxygen2<span class="sc">::</span><span class="fu">roxygenize</span>(<span class="at">load_code =</span> sourceDir), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>roxygen2<span class="sc">::</span><span class="fu">roxygenize</span>()</span></code></pre></div>
-<pre><code>Writing &#39;]8;;file:///private/var/folders/s0/zfzm55px2nd2v__zlw5xfj2h0000gn/T/RtmpAyTiEC/Rbuild5eba42901ca4/rstantools/vignettes/NAMESPACENAMESPACE]8;;&#39;
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">try</span>(roxygen2<span class="sc">::</span><span class="fu">roxygenize</span>(<span class="at">load_code =</span> rstantools_load_code), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>roxygen2<span class="sc">::</span><span class="fu">roxygenize</span>()</span></code></pre></div>
+<pre><code>Writing &#39;NAMESPACE&#39;
 ℹ Loading rstanlm
 ℹ Re-compiling rstanlm (debug build)
 
-Writing &#39;]8;;file:///private/var/folders/s0/zfzm55px2nd2v__zlw5xfj2h0000gn/T/RtmpAyTiEC/Rbuild5eba42901ca4/rstantools/vignettes/NAMESPACENAMESPACE]8;;&#39;
-Writing &#39;]8;;ide:run:pkgload::dev_help(&#39;lm_stan&#39;)lm_stan.Rd]8;;&#39;
-Writing &#39;]8;;ide:run:pkgload::dev_help(&#39;rstanlm-package&#39;)rstanlm-package.Rd]8;;&#39;</code></pre>
+✖ rstanlm-package.R:18: `@docType &quot;package&quot;` is deprecated.
+ℹ Please document &quot;_PACKAGE&quot; instead.
+Writing &#39;NAMESPACE&#39;
+Writing &#39;lm_stan.Rd&#39;
+Writing &#39;rstanlm-package.Rd&#39;</code></pre>
 </div>
 <div id="install-and-use" class="section level2">
 <h2>Install and use</h2>
 <p>Finally, the package is ready to be installed:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using ../rstanlm because already inside the rstanlm directory</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;../rstanlm&quot;</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">&quot;source&quot;</span>)</span></code></pre></div>
-<pre><code>Installing package into &#39;/private/var/folders/s0/zfzm55px2nd2v__zlw5xfj2h0000gn/T/RtmpAyTiEC/Rinst5eba3487520&#39;
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="co"># using ../rstanlm because already inside the rstanlm directory</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;../rstanlm&quot;</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">&quot;source&quot;</span>)</span></code></pre></div>
+<pre><code>Installing package into &#39;/private/var/folders/s0/zfzm55px2nd2v__zlw5xfj2h0000gn/T/Rtmpg6xLFd/Rinst1119515bc46b5&#39;
 (as &#39;lib&#39; is unspecified)</code></pre>
 <p>It is also possible to use
 <code>devtools::install(quick=FALSE)</code> to install the package. The
@@ -615,15 +620,15 @@ or the documentation, you can set <code>quick=TRUE</code> to speed up
 the process, or use <code>devtools::load_all()</code>.</p>
 <p>After installation, the package can be loaded and used like any other
 R package:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rstanlm&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm_stan</span>(<span class="at">y =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>), <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>), </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>               <span class="co"># arguments passed to sampling</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">refresh =</span> <span class="dv">500</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rstanlm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm_stan</span>(<span class="at">y =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>), <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>), </span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>               <span class="co"># arguments passed to sampling</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>               <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">refresh =</span> <span class="dv">500</span>)</span></code></pre></div>
 <pre><code>
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 7.3e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.73 seconds.
+Chain 1: Gradient evaluation took 8.1e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.81 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -634,15 +639,15 @@ Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 1: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.337 seconds (Warm-up)
-Chain 1:                0.343 seconds (Sampling)
-Chain 1:                0.68 seconds (Total)
+Chain 1:  Elapsed Time: 0.341 seconds (Warm-up)
+Chain 1:                0.372 seconds (Sampling)
+Chain 1:                0.713 seconds (Total)
 Chain 1: 
 
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 3.4e-05 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.34 seconds.
+Chain 2: Gradient evaluation took 4e-05 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.4 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -653,15 +658,15 @@ Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 2: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 0.33 seconds (Warm-up)
-Chain 2:                0.338 seconds (Sampling)
-Chain 2:                0.668 seconds (Total)
+Chain 2:  Elapsed Time: 0.387 seconds (Warm-up)
+Chain 2:                0.351 seconds (Sampling)
+Chain 2:                0.738 seconds (Total)
 Chain 2: 
 
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 3).
 Chain 3: 
-Chain 3: Gradient evaluation took 3.3e-05 seconds
-Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.33 seconds.
+Chain 3: Gradient evaluation took 3.6e-05 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.36 seconds.
 Chain 3: Adjust your expectations accordingly!
 Chain 3: 
 Chain 3: 
@@ -672,15 +677,15 @@ Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 3: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 3: 
-Chain 3:  Elapsed Time: 0.325 seconds (Warm-up)
-Chain 3:                0.312 seconds (Sampling)
-Chain 3:                0.637 seconds (Total)
+Chain 3:  Elapsed Time: 0.344 seconds (Warm-up)
+Chain 3:                0.317 seconds (Sampling)
+Chain 3:                0.661 seconds (Total)
 Chain 3: 
 
 SAMPLING FOR MODEL &#39;lm&#39; NOW (CHAIN 4).
 Chain 4: 
-Chain 4: Gradient evaluation took 3.4e-05 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.34 seconds.
+Chain 4: Gradient evaluation took 5.4e-05 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.54 seconds.
 Chain 4: Adjust your expectations accordingly!
 Chain 4: 
 Chain 4: 
@@ -691,22 +696,22 @@ Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
 Chain 4: Iteration: 1500 / 2000 [ 75%]  (Sampling)
 Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4: 
-Chain 4:  Elapsed Time: 0.336 seconds (Warm-up)
-Chain 4:                0.36 seconds (Sampling)
-Chain 4:                0.696 seconds (Total)
+Chain 4:  Elapsed Time: 0.313 seconds (Warm-up)
+Chain 4:                0.312 seconds (Sampling)
+Chain 4:                0.625 seconds (Total)
 Chain 4: </code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">print</span>(fit)</span></code></pre></div>
 <pre><code>Inference for Stan model: lm.
 4 chains, each with iter=2000; warmup=1000; thin=1; 
 post-warmup draws per chain=1000, total post-warmup draws=4000.
 
-           mean se_mean   sd  2.5%   25%   50%   75% 97.5% n_eff Rhat
-intercept -0.17    0.01 0.34 -0.89 -0.37 -0.17  0.04  0.47  2152    1
-beta       0.41    0.01 0.35 -0.28  0.21  0.41  0.61  1.11  2242    1
-sigma      0.99    0.01 0.32  0.58  0.78  0.92  1.14  1.81  1910    1
-lp__      -4.01    0.04 1.54 -7.98 -4.69 -3.62 -2.88 -2.28  1328    1
+           mean se_mean   sd   2.5%   25%   50%   75% 97.5% n_eff Rhat
+intercept  0.32    0.01 0.53  -0.72  0.00  0.32  0.63  1.36  2470 1.00
+beta      -0.65    0.01 0.67  -2.02 -1.03 -0.64 -0.25  0.65  2467 1.00
+sigma      1.58    0.01 0.51   0.91  1.23  1.48  1.79  2.92  1473 1.00
+lp__      -8.19    0.05 1.48 -11.96 -8.82 -7.81 -7.11 -6.52   900 1.01
 
-Samples were drawn using NUTS(diag_e) at Wed Mar 29 18:39:03 2023.
+Samples were drawn using NUTS(diag_e) at Mon Jan 22 10:10:51 2024.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
